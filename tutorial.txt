@@ -1,0 +1,108 @@
+1. download xampp berfungsi untuk menyimpan,menghapus,memperbarui, data yang di proses oleh postman, apabila belum memilki xammp https://www.apachefriends.org/ habis selesai download install lalu buka saat xampp di buka klik start di baris apaache dan MySQL di baris MySQL ada tombol admin lalu klik, anda akan di arahkan ke halaman admin di siini anda bisa menambahakn database baru.
+caranya adalah di halaman admin klik baru di baru pilih sql lalu copy 
+CREATE DATABASE notes_db;
+USE notes_db;
+create table notes
+(
+    id       bigint auto_increment
+        primary key,
+    title    text     not null,
+    datetime datetime not null,
+    note     longtext not null
+);	
+dan paste kan ke dalam sql lalu kilik kirim,
+2. postman digunakan untuk mengembangkan, menguji, dan mengelola API https://www.postman.com/downloads/
+3. download note_app di link "https://github.com/agungtri12/backend.note", setelah melaukan download extrak file zip menjadi folder lalu pindahkan note_app ke local disk c xampp/htdocs
+4. buka visual studio code lalu pilih folder yang local disk c xampp/htdocs/note_app
+5. lalu pergi .env yang bersi 
+APP_PORT=3000
+HOST=localhost
+USER=root / ganti seuai nama user yang telah anda ganti apabila tidak mersa menganti nama user jangan di rubah /
+PASSWORD=  / ganti seuai password  yang telah anda ganti apabila tidak mersa menganti password jangan di rubah /
+DATABASE=notes_db / sesuai dengan CREATE DATABASE notes_db; yang anda berikan/
+6. bila ingin menjalankan di terminal studio code klik node app.js bila gagal akan muncul 
+PS C:\xampp\htdocs\notes_app> node app.js
+Server running on http://localhost:3000
+Berhasil terhubung ke server database.
+Peringatan: Database "notes_db" belum dibuat.
+Silakan buat database "notes_db" terlebih dahulu.
+bila berhasil akan muncul
+PS C:\xampp\htdocs\notes_app> node app.js
+Server running on http://localhost:3000
+Berhasil terhubung ke server database.
+Database "notes_db" ditemukan.
+Berhasil menggunakan database "notes_db"
+7. copy http://localhost:3000  
+8. apabila berhasil buka postman di postman ada tombolnew dan import klik new lalu pilih http
+9. setelah berhasil di buat paste kan  http://localhost:3000 dan tambahkan /nama table, jadi http://localhost:3000/notes
+10. stelah mempastekan disebelah kiri ada pilihan get,post,put,delete
+11. apabila anda ingin bembuat catatan baru pilih POST lalu pastekan http://localhost:3000/notes di bwah tombol pilih dan serch dan tombol send ada bari horizontal pilih boddy
+12. di bagian body pilih raw dan json 
+13. apabila sudah di bawahnya ketik 
+{
+    "title": "Meeting Notes",
+    "datetime": "2024-12-07 15:00:00",
+    "note": "Discuss project updates and deadlines."
+}
+14. lalu klik send apabila berhasil muncul:
+{
+    "id": 1,
+    "message": "Catatan berhasil dibuat"
+}
+15.apabila ingin melihat semua note pilih GATE  lalu pastekan http://localhost:3000/notes
+apabila berhasil muncul semua note:
+[
+    {
+        "id": 1,
+        "title": "Meeting Notes",
+        "datetime": "2024-12-07T08:44:22.000Z",
+        "note": "Discuss project updates and deadlines."
+    },
+    {
+        "id": 2,
+        "title": "Meeting Notes",
+        "datetime": "2024-12-07T08:45:23.000Z",
+        "note": "Tugas Back End "
+    }
+]
+16. apabila ingin melihat salah satu  note pilih GATE  lalu pastekan http://localhost:3000/notes/id yang ingin dilihat contoh http://localhost:3000/notes/2
+apabila berhasil muncul note dengan id 2:
+{
+    "id": 2,
+    "title": "Meeting Notes",
+    "datetime": "2024-12-07T08:45:23.000Z",
+    "note": "Tugas Back End "
+}
+17. apabila ingin memperbarui salah satu  note pilih GATE  lalu pastekan http://localhost:3000/notes/id yang ingin diperbarui contoh http://localhost:3000/notes/2
+di bagian body pilih raw dan json, apabila sudah di bawahnya ketik 
+{
+    "title": "Judul Baru",
+    "datetime": "2024-12-07 15:35:00",  // Tanggal dan waktu sesuai zona waktu Indonesia
+    "note": "Ini adalah catatan yang diperbarui"
+}
+apabila berhasil memperbarui muncul di Bawah:
+{
+    "message": "Catatan berhasil diperbarui"
+}
+18. bila ingin melihat perubahan dari id 2 lakuakan seperti di nomor 16
+	akan Muncul:
+{
+    "id": 2,
+    "title": "Judul Baru",
+    "datetime": "2024-12-07T08:55:52.000Z",
+    "note": "Ini adalah catatan yang diperbarui"
+}
+19. bila inginm menghapus salah satu  note pilih DELETE  lalu pastekan http://localhost:3000/notes/id yang ingin menghapus contoh http://localhost:3000/notes/1 lalu klik send akan muncul:
+{
+    "message": "Catatan berhasil dihapus"
+}
+20.apa bila ingin melihat semua perubahan apakah note 1 sudah di hapus apakah note 2 sudah di perbarui lakukan seperti di nomer 15 akan muncul :
+[
+    {
+        "id": 2,
+        "title": "Judul Baru",
+        "datetime": "2024-12-07T08:55:52.000Z",
+        "note": "Ini adalah catatan yang diperbarui"
+    }
+]
+hanya muncul id 2 karena id 1 berhasil di hapus
