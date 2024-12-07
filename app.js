@@ -13,5 +13,5 @@ app.use(bodyParser.json());
 app.use('/notes', notesRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server Berjalan di http://localhost:${PORT}/notes`);
 });
